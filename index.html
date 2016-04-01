@@ -1,0 +1,90 @@
+<!DOCTYPE>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>IFE JavaScript Task 01</title>
+    <style type="text/css">
+    #element {position: relative;}
+    #element div{float:left;margin:0 10px;width:40px;height: 40px;background:#908686;text-align: center;line-height: 40px;color: #fff;}
+    </style>    
+  </head>
+<body>
+  <div id="context">
+    <form name='form0'>
+      <input type="text" name='content' />
+      <button type='button' name='leftin'>左侧入</button>
+      <button type='button' name='leftout'>左侧出</button>
+      <button type='button' name='rightin'>右侧入</button>
+      <button type='button' name='rightout'>右侧出</button>
+    </form>
+  </div>
+  <div id="element"></div>
+  <script type="text/javascript">
+    function $(id){
+      return document.getElementById(id);
+    }
+    function name(name){
+      return document.form0[name]; //return document.form0.name;错误的写法
+    }
+    //console.log(name('leftin'));
+    function lick(content){
+      var reg = /^\w{1,2}$/;
+      if(!content){
+        alert('不能为空');
+        return false;
+      }else if(!reg.test(content)){
+        alert('只能输入100以内的正数');
+        return false;
+      }else{
+        return true;
+      }
+    }
+    name('leftin').onclick = function(){
+      var content = name('content').value;
+      if(!lick(content)){
+        return;
+      }       
+      var str = document.createElement('div');
+      str.textContent = content;
+      str.setAttribute('class','number');
+      if($('element').innerHTML){
+        $('element').insertBefore(str,$('element').getElementsByClassName('number')[0]);       
+      }else{
+        $('element').appendChild(str);
+      }    
+    }
+    name('leftout').onclick = function(){
+      if($('element').innerHTML){
+        $('element').removeChild($('element').getElementsByClassName('number')[0]);       
+      }else{
+        alert('目前没有元素');
+      }
+    }
+    name('rightout').onclick = function(){
+      if($('element').innerHTML){
+        var clsnm = $('element').getElementsByClassName('number');
+        $('element').removeChild($('element').getElementsByClassName('number')[clsnm.length-1]);       
+      }else{
+        alert('目前没有元素');
+      }
+    }
+    name('rightin').onclick = function(){
+      var content = name('content').value;
+      if(!lick(content)){
+        return;
+      }       
+      var str = document.createElement('div');
+      str.textContent = content;
+      str.setAttribute('class','number');
+      if($('element').innerHTML){
+        var clsnm = $('element').getElementsByClassName('number');
+        $('element').insertBefore(str,$('element').getElementsByClassName('number')[clsnm.length]);       
+      }else{
+        $('element').appendChild(str);
+      }
+    }
+
+    
+  </script>
+</body>
+</html>
